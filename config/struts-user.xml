@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!-- 用户页面action -->
+	<package name="userAction" namespace="/user" extends="common">
+		<action name="userAction_*" method="{1}" class="com.online.bos.web.action.UserAction">
+			<result name="home" >/index.jsp</result>
+		</action>
+	</package>
+</struts>

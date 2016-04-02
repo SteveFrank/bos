@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!-- 1.1  开发模式 -->
+	<constant name="struts.devMode" value="false"></constant>
+	<!-- 1.2 struts 标签主题 没有风格 为是回显的作用-->
+	<constant name="struts.ui.theme" value="simple"></constant>
+	<!-- 注册国际化文件 -->
+	<constant name="struts.custom.i18n.resources" value="message"></constant>
+	<!-- 使用Spring动态创建Action -->
+	<constant name="struts.objectFactory" value="spring"/>
+	<package name="common" namespace="/" extends="struts-default">
+		<interceptors>
+			<!-- 初始注册拦截器 -->
+			<interceptor name="bosLogin" class="com.online.bos.web.interceptor.BOSLoginInterceptor">
+				<param name="excludeMethods">login</param>
+			</interceptor>
+			<!-- 拦截器栈 -->
+			<interceptor-stack name="bos">
+				<interceptor-ref name="bosLogin"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 指定默认的拦截器栈 -->
+		<default-interceptor-ref name="bos"></default-interceptor-ref>
+		
+		<global-results>
+			<result name="login">/login.jsp</result>
+		</global-results>
+	</package>
+	
+	<!-- 全局访问页面的action -->
+	<package name="basicstruts2" namespace="/" extends="common">
+		<!-- 需要进行权限控制的页面访问 -->
+		<action name="page_*_*">
+			<result type="dispatcher">/WEB-INF/pages/{1}/{2}.jsp</result>
+		</action>
+	</package>
+	
+	<include file="struts-user.xml"></include>
+	<include file="struts-staff.xml"></include>
+	<include file="struts-region.xml"></include>
+	<include file="struts-subarea.xml"></include>
+	<include file="struts-decided.xml"></include>
+</struts>

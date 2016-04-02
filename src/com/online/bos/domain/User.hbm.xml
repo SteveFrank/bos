@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.online.bos.domain">
+	<!-- 配置类的映射 -->
+	<class name="User" table="t_user">
+		<!-- 1.配置主键生成策略 -->
+		<id name="id">
+			<generator class="uuid"/>
+		</id>
+		
+		<!-- 2.配置其他属性 -->
+		<property name="username" column="USERNAME" type="string"/>
+		<property name="password" column="PASSWORD" type="string"/>
+		<property name="salary" column="SALARY" type="string"/>
+		<property name="birthday" column="BIRTHDAY" type="string"/>
+		<property name="gender" column="GENDER" type="string"/>
+		<property name="station" column="STATION" type="string"/>
+		<property name="telephone" column="TELEPHONE" type="string"/>
+		<property name="remark" column="REMARK" type="string"/>
+		
+		<!-- 3.配置对象关联关系；父部门：一个部门下有多个子部门；自关联 -->
+		
+	</class>
+	<!-- 修改密码HQL语句 -->
+	<query name="editPassword">
+		update User set password = ? where id = ?
+	</query>
+	
+</hibernate-mapping>

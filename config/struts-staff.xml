@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!-- 取派员页面action -->
+	<package name="staffAction" namespace="/staff" extends="common">
+		<action name="staffAction_*" method="{1}" class="com.online.bos.web.action.StaffAction">
+			<result name="list">/WEB-INF/pages/base/staff.jsp</result>
+		</action>
+	</package>
+</struts>
