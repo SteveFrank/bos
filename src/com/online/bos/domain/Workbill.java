@@ -12,13 +12,13 @@ public class Workbill implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	// Fields
 	private String id;
-	private Noticebill Noticebill;
-	private Staff staff;
-	private String type;
-	private String pickstate;
-	private Timestamp buildtime;
-	private Integer attachbilltimes;
-	private String remark;
+	private Noticebill Noticebill; //工单关联的业务受理通知单
+	private Staff staff; //这是谁的任务，也就是关联的取派员
+	private String type; //工单的类型：新，追，改，销
+	private String pickstate; //取件状态：未取件，取件中，已取件
+	private Timestamp buildtime; //工作单产生时间
+	private Integer attachbilltimes; //追单次数
+	private String remark; //备注（实际应用十分重要）
 
 	// Constructors
 	/** default constructor */

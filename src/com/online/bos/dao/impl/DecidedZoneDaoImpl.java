@@ -9,5 +9,10 @@ import com.online.bos.domain.Decidedzone;
 @Repository("decidedZoneDao")
 public class DecidedZoneDaoImpl extends BaseDaoImpl<Decidedzone> implements
 		IDecidedZoneDao {
+
+	@Override
+	public Decidedzone findDecidedZoneById(String decidedzone_id) {
+		return this.getHibernateTemplate().get(Decidedzone.class, decidedzone_id);
+	}
 	
 }

@@ -27,4 +27,7 @@ public interface CustomerService {
 	// 保存初次使用的客户信息
 	public void saveCustomer(Customer _customer);
 	
+	//根据取件地址匹配定区ID
+	public String findDecidedzoneByPickAddress(String pickAddress);
+	
 }
