@@ -17,6 +17,7 @@ import org.hibernate.criterion.Order;
 
 import com.online.bos.page.PageBean;
 import com.online.bos.service.IDecidedZoneService;
+import com.online.bos.service.INoticeBillService;
 import com.online.bos.service.IRegionService;
 import com.online.bos.service.IStaffService;
 import com.online.bos.service.ISubareaService;
@@ -48,6 +49,8 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 	protected ISubareaService subareaService;
 	@Resource(name="decidedZoneService")
 	protected IDecidedZoneService decidedZoneService;
+	@Resource(name="noticeBillService")
+	protected INoticeBillService noticeBillService;
 	
 	
 	protected PageBean<T> pageBean = new PageBean<T>();
@@ -89,7 +92,7 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 		//一定需要注意这一块儿，否则必然会造成死循环
 		jsonConfig.setExcludes(excludes);
 		String json = JSONObject.fromObject(pageBean,jsonConfig).toString();
-		ServletActionContext.getResponse().setContentType("text/html;charset=UTF-8");
+		ServletActionContext.getResponse().setContentType("text/json;charset=UTF-8");
 		try {
 			ServletActionContext.getResponse().getWriter().print(json);
 		} catch (IOException e) {
@@ -110,7 +113,27 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 		//一定需要注意这一块儿，否则必然会造成死循环
 		jsonConfig.setExcludes(excludes);
 		String json = JSONArray.fromObject(list,jsonConfig).toString();
-		ServletActionContext.getResponse().setContentType("text/html;charset=UTF-8");
+		ServletActionContext.getResponse().setContentType("text/json;charset=UTF-8");
+		try {
+			ServletActionContext.getResponse().getWriter().print(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 将Object数据序列化到JSON
+	 * @param list
+	 * @param excludes
+	 */
+	public void writeObject2Json(Object object, String[] excludes) { 
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setExcludes(excludes);
+		String json = JSONObject.fromObject(object, jsonConfig).toString();
+		
+		ServletActionContext.getResponse().setContentType("text/json;charset=UTF-8");
+		
 		try {
 			ServletActionContext.getResponse().getWriter().print(json);
 		} catch (IOException e) {

@@ -44,4 +44,5 @@
 	<include file="struts-region.xml"></include>
 	<include file="struts-subarea.xml"></include>
 	<include file="struts-decided.xml"></include>
+	<include file="struts-noticebill.xml"></include>
 </struts>

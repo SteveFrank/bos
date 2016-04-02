@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!-- 定区页面action -->
+	<package name="noticebillAction" namespace="/noticebill" extends="common">
+		<action name="noticebillAction_*" method="{1}" class="com.online.bos.web.action.NoticebillAction">
+			<result name="toAddUI">/WEB-INF/pages/qupai/noticebill_add.jsp</result>
+			<result name="list">/WEB-INF/pages/qupai/noticebill.jsp</result>
+		</action>
+	</package>
+</struts>
