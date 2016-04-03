@@ -8,6 +8,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
@@ -21,11 +22,11 @@ import com.online.bos.domain.User;
  */
 public class BOSRealm extends AuthorizingRealm {
 	
-	//注入DAO
+	// 注入DAO
 	@Resource(name="userDao")
 	private IUserDao userDao;
 	
-	//认证方法
+	// 认证方法
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken authenticationToken) throws AuthenticationException {
@@ -54,11 +55,24 @@ public class BOSRealm extends AuthorizingRealm {
 		return info;
 	}
 	
-	//授权方法
+	// 授权方法
+	// 执行的时期
+	/**
+	 * 在访问需要控制的时候需要权限
+	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principalCollection) {
-		return null;
+		
+		//根据当前登录用户，查询用户的角色，根据角色对应获得的权限添加到信息对象中
+		
+		//所有的过程都是动态从数据库中取出来
+		
+		//为所有的用户授予staff权限（模拟）
+		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+		info.addStringPermission("staff");
+		
+		return info;
 	}
 	
 	
