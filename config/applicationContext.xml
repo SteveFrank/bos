@@ -68,7 +68,13 @@
 	</bean>
 	
 	<!-- 定义安全管理器 -->
-	<bean id="securityManager"></bean>
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<!-- 注入realm -->
+		<property name="realm" ref="bosRealm"></property>
+	</bean>
+	
+	<!-- 自定义Realm -->
+	<bean id="bosRealm" class="com.online.bos.shiro.BOSRealm"></bean>
 	
 	<!-- 配置shiro的过滤器 -->
 	<!-- 当前对象用于创建shiro框架需要的过滤器对象 -->
@@ -84,14 +90,21 @@
 		<property name="unauthorizedUrl" value="/500.html"></property>
 		<!-- 基于URL拦截权限控制 -->
 		<!-- 
+			URL路径自上而下进行匹配
+		 -->
+		<!-- 
 			anon过滤器处理原则 ：随便访问
+			authc需要进行权限认证
 			perms必须要staff权限
 		 -->
 		<property name="filterChainDefinitions">
 			<value>
 				/css/** = anon
-				/js/** = anon
+				/easyuidemo/** = anon
 				/images/** = anon
+				/js/** = anon
+				/json/** = anon
+				/user/** = anon
 				/validatecode.jsp* = anon
 				/login.jsp* = anon
 				/user/userAction_login.action = anon
@@ -99,7 +112,6 @@
 				/* = authc
 			</value>
 		</property>
-		
 	</bean>
 	
 </beans>

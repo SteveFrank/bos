@@ -25,5 +25,17 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements IUserDao {
 			return null;
 		}
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public User findUserByUsername(String username) {
+		String hql = "from com.online.bos.domain.User user where user.username = ?";
+		List<User> list = this.getHibernateTemplate().find(hql,username);
+		if (list != null && list.size() > 0) {
+			return list.get(0);
+		} else {
+			return null;
+		}
+	}
 	
 }
