@@ -27,14 +27,16 @@
 	src="${pageContext.request.contextPath }/js/easyui/locale/easyui-lang-zh_CN.js"
 	type="text/javascript"></script>
 <script type="text/javascript">
+	//定义的全局变量方便找到当前行信息
 	var editIndex ;
 	
+	//当录入完成一行，并且信息完整在新增一行的时候会直接进行添加到数据库中
 	function doAdd(){
-		if(editIndex != undefined){
+		if(editIndex != undefined){ //先结束正在编辑的一行
 			$("#grid").datagrid('endEdit',editIndex);
 		}
-		if(editIndex==undefined){
-			//alert("快速添加电子单...");
+		if(editIndex == undefined){
+			//快速添加表单
 			$("#grid").datagrid('insertRow',{
 				index : 0,
 				row : {}
@@ -50,6 +52,7 @@
 	
 	function doCancel(){
 		if(editIndex!=undefined){
+			
 			$("#grid").datagrid('cancelEdit',editIndex);
 			if($('#grid').datagrid('getRows')[editIndex].id == undefined){
 				$("#grid").datagrid('deleteRow',editIndex);
@@ -75,6 +78,7 @@
 		iconCls : 'icon-save',
 		handler : doSave
 	}];
+	
 	// 定义列
 	var columns = [ [ {
 		field : 'id',
@@ -158,13 +162,24 @@
 			pageList: [30,50,100],
 			pagination : true,
 			toolbar : toolbar,
-			url :  "",
+			url :  "${pageContext.request.contextPath}/workordermanage/workordermanageAction_pageQuery.action",
 			idField : 'id',
 			columns : columns,
 			onDblClickRow : doDblClickRow,
+			//结束编辑状态时候会触发的事件
 			onAfterEdit : function(rowIndex, rowData, changes){
 				console.info(rowData);
 				editIndex = undefined;
+				//发送ajax请求，操作数据库
+				//rowData本身就是本行的json数据
+				var url = "${pageContext.request.contextPath}/workordermanage/workordermanageAction_add.action";
+				$.post(url,rowData,function(data){
+					if(data == '1') {
+						$.messager.alert("添加成功","成功添加工单"+rowData.id,"info");
+					} else {
+						$.messager.alert("添加失败","添加工单"+rowData.id+"失败","warning");
+					}
+				});
 			}
 		});
 	});

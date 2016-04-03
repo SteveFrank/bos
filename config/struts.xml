@@ -45,4 +45,5 @@
 	<include file="struts-subarea.xml"></include>
 	<include file="struts-decided.xml"></include>
 	<include file="struts-noticebill.xml"></include>
+	<include file="struts-workordermanage.xml"></include>
 </struts>

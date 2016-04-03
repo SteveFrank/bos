@@ -22,6 +22,7 @@ import com.online.bos.service.IRegionService;
 import com.online.bos.service.IStaffService;
 import com.online.bos.service.ISubareaService;
 import com.online.bos.service.IUserService;
+import com.online.bos.service.IWorkordermanageService;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -51,7 +52,8 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 	protected IDecidedZoneService decidedZoneService;
 	@Resource(name="noticeBillService")
 	protected INoticeBillService noticeBillService;
-	
+	@Resource(name="workordermanageService")
+	protected IWorkordermanageService workordermanageService;
 	
 	protected PageBean<T> pageBean = new PageBean<T>();
 	//离线查询对象，用于包装查询条件
