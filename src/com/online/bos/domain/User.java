@@ -1,6 +1,8 @@
 package com.online.bos.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * User生成实体类
@@ -18,8 +20,9 @@ public class User  implements Serializable{
 	private String gender;			
 	private String station;			
 	private String telephone;			
-	private String remark;	 //简介		
-
+	private String remark;	 //简介
+	private Set<Role> roles = new HashSet<Role>(); //用户对应的角色
+	
 	
 	public String getId() {
 		return id;
@@ -82,5 +85,13 @@ public class User  implements Serializable{
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	
+	public Set<Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}	
+	
 }

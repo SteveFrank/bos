@@ -67,4 +67,39 @@
 		<property name="serviceUrl" value="http://localhost:8080/boscrm/remoting/customer"/>
 	</bean>
 	
+	<!-- 定义安全管理器 -->
+	<bean id="securityManager"></bean>
+	
+	<!-- 配置shiro的过滤器 -->
+	<!-- 当前对象用于创建shiro框架需要的过滤器对象 -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!-- 注入安全管理器 -->
+		<property name="securityManager" ref="securityManager"></property>
+		<!-- 注入系统的登录访问路径 -->
+		<!-- 跳转到登录页面 -->
+		<property name="loginUrl" value="/login.jsp"></property>
+		<!-- 成功页面 -->
+		<property name="successUrl" value="/index.jsp"></property>
+		<!-- 权限不足的错误提示页面 -->
+		<property name="unauthorizedUrl" value="/500.html"></property>
+		<!-- 基于URL拦截权限控制 -->
+		<!-- 
+			anon过滤器处理原则 ：随便访问
+			perms必须要staff权限
+		 -->
+		<property name="filterChainDefinitions">
+			<value>
+				/css/** = anon
+				/js/** = anon
+				/images/** = anon
+				/validatecode.jsp* = anon
+				/login.jsp* = anon
+				/user/userAction_login.action = anon
+				/page_base_staff.action = perms["staff"]
+				/* = authc
+			</value>
+		</property>
+		
+	</bean>
+	
 </beans>
