@@ -7,10 +7,6 @@
 	version="2.5">
   <display-name>宅急送BOS系统</display-name>
   
-  <welcome-file-list>
-    <welcome-file>login.jsp</welcome-file>
-  </welcome-file-list>
-  
   <!-- 中文乱码问题解决过滤器 -->
   <filter>
   	<filter-name>characterFilter</filter-name>
@@ -27,6 +23,7 @@
   	<filter-name>characterFilter</filter-name>
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
+  <!-- 设置servlet编码结束 -->
   
   <!-- spring提供的解决hibernate延迟加载问题的过滤器 -->
   <filter>
@@ -50,18 +47,25 @@
   	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
   
+  <!-- Spring配置文件结束 -->
+  
   <!-- 配置由Spring提供的过滤器，用于整合shiro框架 -->
   <!-- 在项目启动的过程中，当前过滤器会从Spring工厂中提取同名对象 -->
   <filter>
   	<filter-name>shiroFilter</filter-name>
   	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  	<init-param>
+  		<param-name>targetFilterLifecycle</param-name>
+		<param-value>true</param-value>
+  	</init-param>
   </filter>
   <filter-mapping>
   	<filter-name>shiroFilter</filter-name>
   	<url-pattern>/*</url-pattern>
+  	<dispatcher>REQUEST</dispatcher>
   </filter-mapping>
   
-  <!-- struts核心控制器 -->
+  <!-- struts核心控制器 配置开始 -->
   <filter>
   	<filter-name>struts2</filter-name>
   	<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
@@ -70,10 +74,14 @@
   <filter-mapping>
   	<filter-name>struts2</filter-name>
   	<url-pattern>/*</url-pattern>
-  	
   	<dispatcher>REQUEST</dispatcher>
   	<dispatcher>FORWARD</dispatcher>
   </filter-mapping>
+  <!-- struts核心控制器 配置结束-->
   
+  <!-- 欢迎页面 -->
+  <welcome-file-list>
+    <welcome-file>login.jsp</welcome-file>
+  </welcome-file-list>
   
 </web-app>

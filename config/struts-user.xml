@@ -7,6 +7,7 @@
 	<package name="userAction" namespace="/user" extends="common">
 		<action name="userAction_*" method="{1}" class="com.online.bos.web.action.UserAction">
 			<result name="home" >/index.jsp</result>
+			<result name="list">/WEB-INF/pages/admin/userlist.jsp</result>
 		</action>
 	</package>
 </struts>

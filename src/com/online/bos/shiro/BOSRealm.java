@@ -1,5 +1,7 @@
 package com.online.bos.shiro;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.shiro.authc.AuthenticationException;
@@ -13,6 +15,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
 import com.online.bos.dao.IUserDao;
+import com.online.bos.domain.Function;
 import com.online.bos.domain.User;
 
 /**
@@ -31,8 +34,6 @@ public class BOSRealm extends AuthorizingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken authenticationToken) throws AuthenticationException {
 		//返回空当前账号不存在
-//		System.out.println("========================================");
-//		System.out.println("2、开始认证顺序");
 		
 		//toke强转
 		UsernamePasswordToken usernamePasswordToken = 
@@ -66,11 +67,31 @@ public class BOSRealm extends AuthorizingRealm {
 		
 		//根据当前登录用户，查询用户的角色，根据角色对应获得的权限添加到信息对象中
 		
+		//程序任何位置都可以拿到user对象
+		
+		//方法一：
+		User user = (User) principalCollection.getPrimaryPrincipal();
+		System.out.println(user);
+		
+		//方法二：
+//		Subject subject = SecurityUtils.getSubject();
+//		User _user = (User) subject.getPrincipal();
+//		System.out.println("subject"+_user.getUsername());
+		
+		//方法三：从context中获取BOSContext中获取
+		
 		//所有的过程都是动态从数据库中取出来
 		
 		//为所有的用户授予staff权限（模拟）
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		info.addStringPermission("staff");
+		//根据当前登录用户，查询用户角色，返回用户权限，将权限添加到当前的权限信息中
+//		List<Function> list = userDao.findFunctionByUserId(user.getId());
+//		
+//		for (Function function : list) {
+//			//权限关键字
+//			String code = function.getCode();
+//			info.addStringPermission(code);
+//		}
 		
 		return info;
 	}

@@ -1,6 +1,7 @@
 package com.online.bos.web.action;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -69,6 +70,7 @@ public class UserAction extends BaseAction<User> {
 				this.addActionError(this.getText("loginError"));
 				return LOGIN;
 			}
+			
 			ActionContext.getContext().getSession().put("loginUser", user);
 			return "home";
 		} else {
@@ -141,6 +143,37 @@ public class UserAction extends BaseAction<User> {
 		ServletActionContext.getResponse().setContentType("text/html;charset=UTF-8");
 		ServletActionContext.getResponse().getWriter().print(flag);
 		
+		return NONE;
+	}
+	
+	//接收角色的ID数组
+	public String[] roleIds;
+	public void setRoleIds(String[] roleIds) {
+		this.roleIds = roleIds;
+	}
+	
+	/**
+	 * 添加用户并且保存权限
+	 * @return
+	 */
+	public String add(){
+		userService.save(model,roleIds);
+		return "list";
+	}
+	
+	/**
+	 * 查询所有用户信息
+	 * @return
+	 */
+	public String listajax() {
+		List<User> list = userService.findAll();
+		writeList2Json(list, new String[]{"roles","currentPage","pageSize","detachedCriteria"});
+		return NONE;
+	}
+	
+	public String pageQuery() {
+		userService.pageQuery(pageBean);
+		writePageBean2Json(pageBean, new String[]{"functions","users","currentPage","pageSize","detachedCriteria"});
 		return NONE;
 	}
 }

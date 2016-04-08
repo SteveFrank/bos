@@ -94,4 +94,16 @@ public class User  implements Serializable{
 		this.roles = roles;
 	}	
 	
+	//角色名称
+	public String getRoleNames() {
+		String roleNames = "";
+		if (roles != null && roles.size() > 0) {
+			for (Role role : roles) {
+				String name = role.getName();
+				roleNames += name + "  ";
+			}
+		}
+		return roleNames;
+	}
+	
 }

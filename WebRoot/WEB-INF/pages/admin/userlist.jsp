@@ -53,7 +53,8 @@
 		field : 'username',
 		title : '名称',
 		width : 80,
-		rowspan : 2
+		rowspan : 2,
+		align : 'center'
 	} ] ];
 
 
@@ -76,8 +77,15 @@
 	}, {
 		field : 'telephone',
 		title : '电话',
-		width : 800,
-		rowspan : 2
+		width : 200,
+		rowspan : 2,
+		align : 'center'
+	}, {
+		field : 'roleNames',
+		title : '角色',
+		width : 100,
+		rowspan : 2,
+		align : 'center'
 	} ], [ {
 		field : 'station',
 		title : '单位',
@@ -87,7 +95,7 @@
 		field : 'salary',
 		title : '工资',
 		width : 80,
-		align : 'right'
+		align : 'center'
 	} ] ];
 	$(function(){
 		// 初始化 datagrid
@@ -99,7 +107,9 @@
 			rownumbers : true,
 			striped : true,
 			toolbar : toolbar,
-			url : "json/users.json",
+			url : "${pageContext.request.contextPath}/user/userAction_pageQuery.action",
+			pageList: [5,10,30],
+			pagination: true,
 			idField : 'id', 
 			frozenColumns : frozenColumns,
 			columns : columns,
@@ -121,7 +131,6 @@
 	}
 	
 	function doAdd() {
-		alert("添加用户");
 		location.href="${pageContext.request.contextPath}/page_admin_userinfo.action";
 	}
 
@@ -129,7 +138,6 @@
 		alert("编辑用户");
 		var item = $('#grid').datagrid('getSelected');
 		console.info(item);
-		//window.location.href = "edit.html";
 	}
 
 	function doDelete() {

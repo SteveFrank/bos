@@ -45,17 +45,20 @@
 					enable : true
 				}
 			},
+			//可以进行勾选的复选框
 			check : {
 				enable : true,
 			}
 		};
 		
 		$.ajax({
-			url : '${pageContext.request.contextPath}/json/menu.json',
+			//发送ajax请求加载权限信息
+			url : '${pageContext.request.contextPath}/function/functionAction_listajax.action',
 			type : 'POST',
 			dataType : 'text',
-			success : function(data) {
+			success : function(data) { //data就是服务端返回的权限数据
 				var zNodes = eval("(" + data + ")");
+				//使用权限数据初始化ztree
 				$.fn.zTree.init($("#functionTree"), setting, zNodes);
 			},
 			error : function(msg) {
@@ -63,12 +66,28 @@
 			}
 		});
 		
-		
-		
 		// 点击保存
 		$('#save').click(function(){
-			location.href='${pageContext.request.contextPath}/page_admin_privilege.action';
+			var v = $("#roleForm").form("validate");
+			if(v) {
+				//获得ztree对象
+				var treeObj = $.fn.zTree.getZTreeObj("functionTree");
+				//获得当前ztree对象被选中的节点
+				//获得是所有选中的节点不论是否为父节点或者子节点
+				var nodes   = treeObj.getCheckedNodes(true);
+				
+				//循环数组，获得节点ID，拼接成字符串使用逗号分隔
+				var array = new Array();
+				for(var i=0;i<nodes.length;i++) {
+					array.push(nodes[i].id);
+				}
+				var ids = array.join(",");
+				//为隐藏域赋值
+				$("input[name=functionIds]").val(ids);
+				$("#roleForm").submit();
+			}
 		});
+		
 	});
 </script>	
 </head>
@@ -79,7 +98,7 @@
 			</div>
 		</div>
 		<div region="center" style="overflow:auto;padding:5px;" border="false">
-			<form id="roleForm" method="post">
+			<form id="roleForm" method="post" action="${pageContext.request.contextPath }/role/roleAction_add.action">
 				<table class="table-edit" width="80%" align="center">
 					<tr class="title">
 						<td colspan="2">角色信息</td>
@@ -87,7 +106,13 @@
 					<tr>
 						<td width="200">编号</td>
 						<td>
-							<input type="text" name="id" class="easyui-validatebox" data-options="required:true" />						
+							自动生成						
+						</td>
+					</tr>
+					<tr>
+						<td width="200">关键字</td>
+						<td>
+							<input type="text" name="code" class="easyui-validatebox" data-options="required:true" />						
 						</td>
 					</tr>
 					<tr>
@@ -104,6 +129,7 @@
 						<td>授权</td>
 						<td>
 							<ul id="functionTree" class="ztree"></ul>
+							<input type="hidden" name="functionIds"/>
 						</td>
 					</tr>
 					</table>

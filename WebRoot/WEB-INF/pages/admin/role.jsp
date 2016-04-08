@@ -47,12 +47,14 @@
 					}
 				}           
 			],
-			url : '',
+			url : '${pageContext.request.contextPath}/role/roleAction_pageQuery.action',
+			pageList: [5,10,30],
+			pagination: true,
 			columns : [[
 				{
 					field : 'id',
 					title : '编号',
-					width : 200
+					width : 300
 				},
 				{
 					field : 'name',

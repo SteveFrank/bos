@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.online.bos.dao.IUserDao;
 import com.online.bos.dao.base.impl.BaseDaoImpl;
+import com.online.bos.domain.Function;
 import com.online.bos.domain.User;
 
 @Repository("userDao")
@@ -36,6 +37,11 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements IUserDao {
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public List<Function> findFunctionByUserId(String id) {
+		return null;
 	}
 	
 }

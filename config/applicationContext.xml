@@ -5,7 +5,7 @@
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-						http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+						http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 						http://www.springframework.org/schema/context
 						http://www.springframework.org/schema/context/spring-context.xsd
 						http://www.springframework.org/schema/aop
@@ -56,8 +56,10 @@
 	<!-- 支持注解 -->
 	<context:annotation-config />
 	
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	
 	<!-- 事务注解 -->
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="false"/>
 	
 	<!-- 需要重点掌握的远程调用的方法 -->
 	<!-- 配置远程服务的代理对象 -->
@@ -66,15 +68,6 @@
 		<property name="serviceInterface" value="com.online.bos.crm.CustomerService"/>
 		<property name="serviceUrl" value="http://localhost:8080/boscrm/remoting/customer"/>
 	</bean>
-	
-	<!-- 定义安全管理器 -->
-	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-		<!-- 注入realm -->
-		<property name="realm" ref="bosRealm"></property>
-	</bean>
-	
-	<!-- 自定义Realm -->
-	<bean id="bosRealm" class="com.online.bos.shiro.BOSRealm"></bean>
 	
 	<!-- 配置shiro的过滤器 -->
 	<!-- 当前对象用于创建shiro框架需要的过滤器对象 -->
@@ -108,10 +101,38 @@
 				/validatecode.jsp* = anon
 				/login.jsp* = anon
 				/user/userAction_login.action = anon
-				/page_base_staff.action = perms["staff"]
 				/* = authc
 			</value>
 		</property>
+	</bean>
+	
+	<bean id="sessionManager" class="org.apache.shiro.session.mgt.DefaultSessionManager">
+  	</bean>
+	
+	<!-- 定义安全管理器 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<!-- 注入realm -->
+		<property name="realm" ref="bosRealm"></property>
+	</bean>
+	
+	<bean id="lifecycleBeanPostProcessor" 
+			class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+	
+	<!-- 自定义Realm -->
+	<bean id="bosRealm" class="com.online.bos.shiro.BOSRealm">
+	</bean>
+	
+	<!-- 使用shiro的注解需要的配置代码 -->
+	<!-- 开启shiro自动代理 -->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+			depends-on="lifecycleBeanPostProcessor">
+		<!-- 指定强制使用cglib为action创建代理对象 -->
+		<property name="proxyTargetClass" value="true"></property>
+	</bean>
+	
+	<!-- 配置切面类 -->
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager"></property>
 	</bean>
 	
 </beans>

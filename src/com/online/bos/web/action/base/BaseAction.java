@@ -17,8 +17,10 @@ import org.hibernate.criterion.Order;
 
 import com.online.bos.page.PageBean;
 import com.online.bos.service.IDecidedZoneService;
+import com.online.bos.service.IFunctionService;
 import com.online.bos.service.INoticeBillService;
 import com.online.bos.service.IRegionService;
+import com.online.bos.service.IRoleService;
 import com.online.bos.service.IStaffService;
 import com.online.bos.service.ISubareaService;
 import com.online.bos.service.IUserService;
@@ -36,8 +38,6 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 	
 	private static final long serialVersionUID = 1L;
 
-	private Class<T> entityClass;
-	
 	protected T model;       //模型对象
 	
 	@Resource(name="userService")
@@ -54,6 +54,10 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 	protected INoticeBillService noticeBillService;
 	@Resource(name="workordermanageService")
 	protected IWorkordermanageService workordermanageService;
+	@Resource(name="functionService")
+	protected IFunctionService functionService;
+	@Resource(name="roleService")
+	protected IRoleService roleService;
 	
 	protected PageBean<T> pageBean = new PageBean<T>();
 	//离线查询对象，用于包装查询条件
@@ -72,16 +76,38 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 	 * @throws IllegalAccessException
 	 */
 	@SuppressWarnings("unchecked")
-	public BaseAction() throws InstantiationException, IllegalAccessException {
-		ParameterizedType parameterizedType = (ParameterizedType) this.getClass().getGenericSuperclass();
-		Type[] types = parameterizedType.getActualTypeArguments();
-		entityClass = (Class<T>) types[0];
+	public BaseAction() {
+		//获得父类（BaseAction）类型
+		ParameterizedType superClass = null;
+		
+		Type type = this.getClass().getGenericSuperclass();
+		
+		//代理对象否？
+		if (type instanceof ParameterizedType) {
+			superClass = (ParameterizedType) type;
+		} else {
+			//找到regionAction
+			superClass = (ParameterizedType) this.getClass().getSuperclass().getGenericSuperclass();
+		}
+		
+		Type[] types = superClass.getActualTypeArguments();
+		Class<T> domainClass = (Class<T>) types[0];
+		
 		//获得实体类型后创建离线条件查询对象
-		detachedCriteria = DetachedCriteria.forClass(entityClass);
+		detachedCriteria = DetachedCriteria.forClass(domainClass);
 		detachedCriteria.addOrder(Order.desc("id"));
 		pageBean.setDetachedCriteria(detachedCriteria);
+		
 		//entityClass 实体类型
-		model = entityClass.newInstance();
+		try {
+			model = domainClass.newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -143,6 +169,8 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 	@Override
 	public T getModel() {

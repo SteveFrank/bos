@@ -46,4 +46,6 @@
 	<include file="struts-decided.xml"></include>
 	<include file="struts-noticebill.xml"></include>
 	<include file="struts-workordermanage.xml"></include>
+	<include file="struts-function.xml"></include>
+	<include file="struts-role.xml"></include>
 </struts>

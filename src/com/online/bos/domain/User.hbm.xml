@@ -23,7 +23,7 @@
 		<!-- 3.配置对象关联关系；父部门：一个部门下有多个子部门；自关联 -->
 		
 		<!-- 配置用户对应的角色 -->
-		<set name="roles" table="user_role" catalog="bos">
+		<set name="roles" table="user_role">
             <key>
                 <column name="user_id" length="32" not-null="true" />
             </key>

@@ -27,7 +27,6 @@ import com.online.bos.web.action.base.BaseAction;
 @Scope("prototype")
 public class RegionAction extends BaseAction<Region> {
 	private static final long serialVersionUID = 1L;
-	
 	public RegionAction() throws InstantiationException, IllegalAccessException {
 		super();
 	}
@@ -92,7 +91,7 @@ public class RegionAction extends BaseAction<Region> {
 	 */
 	public String pageQuery() throws IOException {
 		regionService.pageQuery(pageBean);
-		writePageBean2Json(pageBean, new String[] {"subareas"});
+		writePageBean2Json(pageBean, new String[] {"currentPage","pageSize","detachedCriteria","subareas"});
 		return NONE;
 	}
 	

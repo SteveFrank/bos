@@ -23,7 +23,7 @@ public class Function implements Serializable {
 	//对应的是当前权限下级权限
 	private Set<Function> childFunctions = new HashSet<Function>(); //对应的多个下级权限
 	private Set<Role> roles = new HashSet<Role>(); //对应的多个角色
-
+	
 	/** default constructor */
 	public Function() {
 	}
@@ -32,7 +32,14 @@ public class Function implements Serializable {
 	public Function(String id) {
 		this.id = id;
 	}
-
+	
+	public String getpId() {
+		if (parentFunction == null) {
+			return "0";
+		}
+		return parentFunction.getId();
+	}
+	
 	public String getId() {
 		return this.id;
 	}
