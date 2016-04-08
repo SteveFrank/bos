@@ -13,6 +13,7 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.online.bos.domain.Function;
 import com.online.bos.domain.User;
 import com.online.bos.utils.BOSContext;
 import com.online.bos.utils.MD5Utils;
@@ -174,6 +175,28 @@ public class UserAction extends BaseAction<User> {
 	public String pageQuery() {
 		userService.pageQuery(pageBean);
 		writePageBean2Json(pageBean, new String[]{"functions","users","currentPage","pageSize","detachedCriteria"});
+		return NONE;
+	}
+	
+	/**
+	 * 根据登录人查询对应的权限菜单
+	 * @return
+	 */
+	public String findMenu() {
+		
+		User user = BOSContext.getLoginUser();
+		List<Function> list = null;
+		if (user.getUsername().equals("admin")) {
+			//超级管理员，加载所有的菜单数据
+			list = functionService.findAllMenu();
+		} else {
+			//根据用户ID查询所有的菜单数据
+			list = functionService.findMenuByUserId(user.getId());
+		}
+		
+		String[] excludes = new String[] {"roles","parentFunction","childFunctions"};
+		this.writeList2Json(list, excludes);
+		
 		return NONE;
 	}
 }

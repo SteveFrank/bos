@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -89,6 +90,7 @@ public class RegionAction extends BaseAction<Region> {
 	 * @return
 	 * @throws IOException
 	 */
+	@RequiresPermissions(value="region")
 	public String pageQuery() throws IOException {
 		regionService.pageQuery(pageBean);
 		writePageBean2Json(pageBean, new String[] {"currentPage","pageSize","detachedCriteria","subareas"});

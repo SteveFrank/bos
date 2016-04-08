@@ -13,7 +13,9 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.stereotype.Component;
 
+import com.online.bos.dao.IFunctionDao;
 import com.online.bos.dao.IUserDao;
 import com.online.bos.domain.Function;
 import com.online.bos.domain.User;
@@ -23,11 +25,14 @@ import com.online.bos.domain.User;
  * @author YQ
  *
  */
+@Component("bosRealm")
 public class BOSRealm extends AuthorizingRealm {
 	
 	// 注入DAO
 	@Resource(name="userDao")
 	private IUserDao userDao;
+	@Resource(name="functionDao")
+	private IFunctionDao functionDao;
 	
 	// 认证方法
 	@Override
@@ -71,7 +76,6 @@ public class BOSRealm extends AuthorizingRealm {
 		
 		//方法一：
 		User user = (User) principalCollection.getPrimaryPrincipal();
-		System.out.println(user);
 		
 		//方法二：
 //		Subject subject = SecurityUtils.getSubject();
@@ -84,17 +88,25 @@ public class BOSRealm extends AuthorizingRealm {
 		
 		//为所有的用户授予staff权限（模拟）
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+		List<Function> list = null;
 		//根据当前登录用户，查询用户角色，返回用户权限，将权限添加到当前的权限信息中
-//		List<Function> list = userDao.findFunctionByUserId(user.getId());
-//		
-//		for (Function function : list) {
-//			//权限关键字
-//			String code = function.getCode();
-//			info.addStringPermission(code);
-//		}
+		
+		//如果是超级管理员应该赋予全部权限的操作
+		if (user.getUsername().equals("admin")) {
+			//如果是超级管理员，授予所有权限
+			list = functionDao.findAll();
+		} else {
+			//普通用户，根据用户查询对应的权限
+			list = functionDao.findFunctionByUserId(user.getId());
+		}
+		
+		for (Function function : list) {
+			//权限关键字
+			String code = function.getCode();
+			info.addStringPermission(code);
+		}
 		
 		return info;
 	}
-	
 	
 }

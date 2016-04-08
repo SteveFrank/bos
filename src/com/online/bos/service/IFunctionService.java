@@ -12,5 +12,9 @@ public interface IFunctionService {
 	public List<Function> findAll();
 
 	public void save(Function model);
+
+	public List<Function> findAllMenu();
+
+	public List<Function> findMenuByUserId(String id);
 	
 }

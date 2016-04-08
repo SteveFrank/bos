@@ -3,6 +3,7 @@ package com.online.bos.web.action;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -35,6 +36,7 @@ public class StaffAction extends BaseAction<Staff> {
 	 * @return
 	 * @throws IOException 
 	 */
+	@RequiresPermissions(value="staff")
 	public String pageQuery() throws IOException {
 		staffService.pageQuery(pageBean);
 		writePageBean2Json(pageBean, new String[] {"currentPage","pageSize","detachedCriteria","decidedzones"});

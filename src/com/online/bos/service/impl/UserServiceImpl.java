@@ -59,5 +59,5 @@ public class UserServiceImpl implements IUserService {
 	public void pageQuery(PageBean<User> pageBean) {
 		userDao.pageQuery(pageBean);
 	}
-	
+
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -92,12 +93,18 @@
 		text : '查询',
 		iconCls : 'icon-search',
 		handler : doView
-	}, {
-		id : 'button-add',
-		text : '增加',
-		iconCls : 'icon-add',
-		handler : doAdd
-	}, {
+	}, 
+	//是否具有某个权限 
+	//使用的是shiro这样的一套标签
+	<shiro:hasPermission name="staff">
+		{
+			id : 'button-add',
+			text : '增加',
+			iconCls : 'icon-add',
+			handler : doAdd
+		} , 
+	</shiro:hasPermission>
+	{
 		id : 'button-delete',
 		text : '作废',
 		iconCls : 'icon-cancel',

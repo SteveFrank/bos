@@ -14,6 +14,9 @@ import net.sf.json.JsonConfig;
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
 import com.online.bos.page.PageBean;
 import com.online.bos.service.IDecidedZoneService;
@@ -34,6 +37,8 @@ import com.opensymphony.xwork2.ModelDriven;
  *
  * @param <T>
  */
+@Controller
+@Scope("prototype")
 public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 	
 	private static final long serialVersionUID = 1L;
@@ -42,10 +47,19 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 	
 	@Resource(name="userService")
 	protected IUserService userService;
-	@Resource(name="staffService")
-	protected IStaffService staffService;
-	@Resource(name="regionService")
-	protected IRegionService regionService;
+	
+	protected IStaffService staffService = null;
+	@Autowired
+	public void setStaffService(IStaffService staffService) {
+		this.staffService = staffService;
+	}
+	
+	protected IRegionService regionService = null;
+	@Autowired
+	public void setRegionService(IRegionService regionService) {
+		this.regionService = regionService;
+	}
+	
 	@Resource(name="subareaService")
 	protected ISubareaService subareaService;
 	@Resource(name="decidedZoneService")

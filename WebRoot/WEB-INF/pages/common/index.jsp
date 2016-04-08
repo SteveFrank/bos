@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -47,7 +48,7 @@
 		
 		// 基本功能菜单加载
 		$.ajax({
-			url : '${pageContext.request.contextPath}/json/menu.json',
+			url : '${pageContext.request.contextPath}/user/userAction_findMenu.action',
 			type : 'POST',
 			dataType : 'text',
 			success : function(data) {
@@ -58,7 +59,7 @@
 				alert('菜单加载异常!');
 			}
 		});
-		
+		<shiro:hasPermission name="systemmanager">
 		// 系统管理菜单加载
 		$.ajax({
 			url : '${pageContext.request.contextPath}/json/admin.json',
@@ -72,7 +73,7 @@
 				alert('菜单加载异常!');
 			}
 		});
-		
+		</shiro:hasPermission>
 		// 页面加载后 右下角 弹出窗口
 		/**************/
 		window.setTimeout(function(){
@@ -179,15 +180,18 @@
 			<div onclick="logoutFun();">退出系统</div>
 		</div>
 	</div>
+	
 	<div data-options="region:'west',split:true,title:'菜单导航'"
 		style="width:200px">
 		<div class="easyui-accordion" fit="true" border="false">
 			<div title="基本功能" data-options="iconCls:'icon-mini-add'" style="overflow:auto">
 				<ul id="treeMenu" class="ztree"></ul>
 			</div>
+			<shiro:hasPermission name="systemmanager">
 			<div title="系统管理" data-options="iconCls:'icon-mini-add'" style="overflow:auto">  
 				<ul id="adminMenu" class="ztree"></ul>
 			</div>
+			</shiro:hasPermission>
 		</div>
 	</div>
 	<div data-options="region:'center'">

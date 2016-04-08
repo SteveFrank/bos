@@ -16,4 +16,5 @@ public interface IUserService {
 	public List<User> findAll();
 
 	public void pageQuery(PageBean<User> pageBean);
+
 }
