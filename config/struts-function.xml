@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!-- 定区页面action -->
+	<package name="functionAction" namespace="/function" extends="common">
+		<action name="functionAction_*" method="{1}" class="com.online.bos.web.action.FunctionAction">
+			<result name="list">/WEB-INF/pages/admin/function.jsp</result>
+		</action>
+	</package>
+</struts>
