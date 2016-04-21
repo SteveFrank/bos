@@ -8,6 +8,7 @@ import org.hibernate.criterion.*;
  * @author YQ
  */
 public class PageBean<T> {
+	
 	//在本项目中因为使用了easyui所以在pageBean中的数据会比没有使用datagrid的情况要少很多
 	private int currentPage; //当前页码
 	private int pageSize;	 //页面显示数量

@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.net.URLEncoder;
 
 import sun.misc.BASE64Encoder;
-
+/**
+ * 针对文件下载时候的中文名称乱码等问题
+ * @author YQ
+ *
+ */
 @SuppressWarnings("restriction")
 public class FileUtils {
 		/**

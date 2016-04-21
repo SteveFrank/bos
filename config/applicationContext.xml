@@ -155,4 +155,24 @@
 		<property name="securityManager" ref="securityManager"></property>
 	</bean>
 	
+	<!-- 配置流程引擎配置对象 -->
+	<bean id="processEngineConfiguration" 
+		class="org.activiti.spring.SpringProcessEngineConfiguration">
+		<!-- 注入数据源 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 注入事务管理器 -->
+		<property name="transactionManager" ref="transactionManager"></property>
+		<!-- 注入自动建表设置 -->
+		<property name="databaseSchemaUpdate" value="true"></property>
+	</bean>
+	
+	<!-- 提供工厂bean，创建流程引擎对象 -->
+	<bean id="processEngine" 
+		class="org.activiti.spring.ProcessEngineFactoryBean">
+		<property name="processEngineConfiguration" ref="processEngineConfiguration"></property>
+	</bean>
+	
+	<!-- 配置Service -->
+	<bean id="repService" factory-bean="processEngine" factory-method="getRepositoryService"></bean>
+		
 </beans>

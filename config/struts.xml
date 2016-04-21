@@ -12,6 +12,7 @@
 	<!-- 使用Spring动态创建Action -->
 	<constant name="struts.objectFactory" value="spring"/>
 	<package name="common" namespace="/" extends="struts-default">
+		
 		<interceptors>
 			<!-- 初始注册拦截器 -->
 			<interceptor name="bosLogin" class="com.online.bos.web.interceptor.BOSLoginInterceptor">
@@ -23,6 +24,7 @@
 				<interceptor-ref name="defaultStack"></interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
+		
 		<!-- 指定默认的拦截器栈 -->
 		<default-interceptor-ref name="bos"></default-interceptor-ref>
 		
@@ -36,6 +38,39 @@
 		<!-- 需要进行权限控制的页面访问 -->
 		<action name="page_*_*">
 			<result type="dispatcher">/WEB-INF/pages/{1}/{2}.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 流程定义管理 -->	
+	<package name="processDefinitionAction" namespace="/processDefinition" extends="common">
+		<!-- 流程定义管理Action -->
+		<action name="processDefinitionAction_*" class="com.online.bos.web.action.ProcessDefinitionAction" method="{1}">
+			<result name="list">/WEB-INF/pages/workflow/processdefinition_list.jsp</result>
+			<result name="toList" type="redirectAction">
+				<param name="namespace">/processDefinition</param>
+				<param name="actionName">processDefinitionAction_list</param>
+			</result>
+			<result name="showpng" type="stream">
+				<param name="contentType">image/png</param>
+				<param name="inputName">pngStream</param>
+				<!--  
+				<param name="contentDisposition">attachment;filename="document.pdf"</param>
+				<param name="bufferSize">1024</param>
+				-->
+			</result>
+		</action>
+	</package>
+	
+	<!-- 流程实例管理 -->
+	<package name="processInstanceAction" namespace="/processInstance" extends="common">
+		<!-- 流程实例管理Action -->
+		<action name="processInstanceAction_*" class="com.online.bos.web.action.ProcessInstanceAction" method="{1}">
+			<result name="list">/WEB-INF/pages/workflow/processinstance_list.jsp</result>
+			<result name="showPng">/WEB-INF/pages/workflow/image.jsp</result>
+			<result name="viewImage" type="stream">
+				<param name="contentType">image/png</param>
+				<param name="inputName">pngStream</param>
+			</result>
 		</action>
 	</package>
 	
