@@ -17,7 +17,7 @@ public class Workordermanage implements Serializable {
 	private String product;
 	private Integer num;
 	private Double weight;
-	private String floadreqr;
+	private String floadreqr;	// 配置要求 （1 无、2 禁航、 3禁铁路）
 	private String prodtimelimit;
 	private String prodtype;
 	private String sendername;
@@ -29,9 +29,11 @@ public class Workordermanage implements Serializable {
 	private Integer feeitemnum;
 	private Double actlweit;
 	private String vol;
-	private String managerCheck;
 	private Date updatetime;
-
+	//修改了工作单中的这两个属性，保证了之后流程处理的使用
+	private String managerCheck = "0";//是否审核 1：已审核 0：未审核
+	private String start = "0";//对应流程是否已经启动 0：未启动 1：已启动
+	
 	// Constructors
 	/** default constructor */
 	public Workordermanage() {
@@ -194,7 +196,6 @@ public class Workordermanage implements Serializable {
 	public Double getActlweit() {
 		return this.actlweit;
 	}
-
 	public void setActlweit(Double actlweit) {
 		this.actlweit = actlweit;
 	}
@@ -202,7 +203,6 @@ public class Workordermanage implements Serializable {
 	public String getVol() {
 		return this.vol;
 	}
-
 	public void setVol(String vol) {
 		this.vol = vol;
 	}
@@ -210,7 +210,6 @@ public class Workordermanage implements Serializable {
 	public String getManagerCheck() {
 		return this.managerCheck;
 	}
-
 	public void setManagerCheck(String managerCheck) {
 		this.managerCheck = managerCheck;
 	}
@@ -218,9 +217,22 @@ public class Workordermanage implements Serializable {
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}
-
 	public void setUpdatetime(Date updatetime) {
 		this.updatetime = updatetime;
 	}
 
+	public String getStart() {
+		return start;
+	}
+	public void setStart(String start) {
+		this.start = start;
+	}
+	
+	@Override
+	public String toString() {
+		return "工作单信息 [编号=" + id + ", 货物名称=" + product
+				+ ", 货物重量=" + weight + ", 收货人="
+				+ receivername + ", 收货人电话=" + receiverphone + "]";
+	}
+	
 }

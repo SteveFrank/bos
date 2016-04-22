@@ -29,7 +29,7 @@
 	type="text/javascript"></script>
 </head>
 <body>
-<s:form action="processDefinition/processDefinitionAction_deploy.action" 
+<s:form action="processDefinitionAction_deploy.action" namespace="/processDefinition"
 	theme="simple" method="post" enctype="multipart/form-data" id="uploadForm">
 	<table class="table-edit" width="100%" >
 		<tr class="title"><td colspan="2">发布新流程</td></tr>

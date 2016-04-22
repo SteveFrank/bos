@@ -11,6 +11,7 @@
 	<constant name="struts.custom.i18n.resources" value="message"></constant>
 	<!-- 使用Spring动态创建Action -->
 	<constant name="struts.objectFactory" value="spring"/>
+	<constant name="struts.multipart.saveDir" value="/tmp"/>
 	<package name="common" namespace="/" extends="struts-default">
 		
 		<interceptors>
@@ -71,6 +72,13 @@
 				<param name="contentType">image/png</param>
 				<param name="inputName">pngStream</param>
 			</result>
+		</action>
+	</package>
+	
+	<!-- 任务操作 -->
+	<package name="taskAction" namespace="/task" extends="common">
+		<action name="taskAction_*" class="com.online.bos.web.action.TaskAction" method="{1}">
+			<result name="groupTaskList">/WEB-INF/pages/workflow/grouptask.jsp</result>
 		</action>
 	</package>
 	

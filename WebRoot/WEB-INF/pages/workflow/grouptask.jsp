@@ -41,7 +41,7 @@
 			</thead>
 			<script type="text/javascript">
 				function showData(taskId){
-					$.post("${pageContext.request.contextPath}/taskAction_showData.action",{"taskId":taskId},function(data){
+					$.post("${pageContext.request.contextPath}/task/taskAction_showData.action",{"taskId":taskId},function(data){
 						$("#div"+taskId).html(data);
 					});
 				}

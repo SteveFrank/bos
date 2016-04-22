@@ -54,11 +54,11 @@
 					<td> <s:property value="#workOrderManage.receiveraddr"/></td>
 					<td> <s:property value="#workOrderManage.receiverphone"/></td>
 					<td> 
-						<s:a action="workOrderManageAction_start" cssClass="easyui-linkbutton" iconCls="icon-edit">启动
+						<s:a namespace="/workordermanage" action="workordermanageAction_start" cssClass="easyui-linkbutton" iconCls="icon-edit">启动
 							<s:param name="id" value="#workOrderManage.id"></s:param>
 						</s:a>
 					</td>
-				</tr>
+				</tr>	
 				</s:iterator>
 			</tbody>
 		</table>

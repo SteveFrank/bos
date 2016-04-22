@@ -4,9 +4,13 @@
     "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 	<!-- 定区页面action -->
-	<package name="workordermanageAction" namespace="/workordermanage" extends="common">
+	<package name="" namespace="/workordermanage" extends="common">
 		<action name="workordermanageAction_*" method="{1}" class="com.online.bos.web.action.WorkordermanageAction">
-			<result name="list">/WEB-INF/pages/qupai/quickworkorder.jsp</result>
+			<result name="list">/WEB-INF/pages/workflow/startransfer.jsp</result>
+			<result name="toList" type="redirectAction">
+				<param name="namespace">/workordermanage</param>
+				<param name="actionName">workordermanageAction_list</param>
+			</result>
 		</action>
 	</package>
 </struts>

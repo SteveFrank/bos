@@ -62,5 +62,9 @@
         <property name="updatetime" type="java.util.Date">
             <column name="updatetime" length="10" />
         </property>
+        
+        <property name="start">
+	    </property>
+        
     </class>
 </hibernate-mapping>

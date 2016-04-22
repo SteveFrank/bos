@@ -8,6 +8,7 @@
 	</classpathentry>
 	<classpathentry including="**/*.java" kind="src" path="config"/>
 	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="process"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
