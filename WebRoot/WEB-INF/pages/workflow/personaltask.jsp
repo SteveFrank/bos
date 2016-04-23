@@ -41,7 +41,7 @@
 			</thead>
 			<script type="text/javascript">
 				function showData(taskId){
-					$.post("${pageContext.request.contextPath}/taskAction_showData.action",{"taskId":taskId},function(data){
+					$.post("${pageContext.request.contextPath}/task/taskAction_showData.action",{"taskId":taskId},function(data){
 						$("#div"+taskId).html(data);
 					});
 				}
@@ -63,8 +63,10 @@
 								</script>
 							</div>
 						</td>
+						<!-- 此处位置方法不能够写死，因为需要适应不同的流程不同的方法，所以必须是动态的 -->
 						<td>
-							<s:a action="taskAction_%{taskDefinitionKey}" namespace="/" cssClass="easyui-linkbutton">办理任务
+							<s:a title="办理【%{name}】任务" action="taskAction_%{taskDefinitionKey}" namespace="/task" 
+								cssClass="easyui-linkbutton">办理任务
 								<s:param name="taskId" value="id"></s:param>
 							</s:a>
 						</td>

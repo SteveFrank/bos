@@ -65,7 +65,7 @@
 							</div>
 						</td>
 						<td>
-							<s:a action="taskAction_takeTask" namespace="/" cssClass="easyui-linkbutton">拾取
+							<s:a action="taskAction_takeTask" namespace="/task" cssClass="easyui-linkbutton">拾取
 								<s:param name="taskId" value="id"></s:param>
 							</s:a>
 						</td>

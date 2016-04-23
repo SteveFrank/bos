@@ -62,5 +62,10 @@ public class WorkordermanageServiceImpl implements IWorkordermanageService {
 		processEngine.getRuntimeService().
 			startProcessInstanceByKey(processDefinitionKey,variables);
 	}
+
+	@Override
+	public void update(Workordermanage workordermanage) {
+		workordermanageDao.update(workordermanage);
+	}
 	
 }

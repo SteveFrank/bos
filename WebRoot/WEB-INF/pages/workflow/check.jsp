@@ -7,15 +7,22 @@
 <title>Insert title here</title>
 </head>
 <body>
+	
 	<h3>审核工作单</h3>
-	${map }
-	<s:form namespace="/" action="taskAction_checkWorkOrderManage">
+	<br />
+	【${map }】
+	<br />
+	<br />
+	<s:form namespace="/task" action="taskAction_checkWorkOrderManage">
 		<s:hidden name="taskId"></s:hidden>
 		 审核结果：<select name="check">
 		 			<option value="1">通过</option>
 		 			<option value="0">不通过</option>
 		 		</select>
+		 		
 		 		<input type="submit" value="提交">
+		 		
 	</s:form>
+	
 </body>
 </html>

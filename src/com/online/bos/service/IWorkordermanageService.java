@@ -18,5 +18,8 @@ public interface IWorkordermanageService {
 	
 	//启动物流配送工作流程
 	public void start(String id);
+	
+	//持久化修改后的数据
+	public void update(Workordermanage workordermanage);
 
 }

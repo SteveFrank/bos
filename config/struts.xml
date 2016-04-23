@@ -79,6 +79,16 @@
 	<package name="taskAction" namespace="/task" extends="common">
 		<action name="taskAction_*" class="com.online.bos.web.action.TaskAction" method="{1}">
 			<result name="groupTaskList">/WEB-INF/pages/workflow/grouptask.jsp</result>
+			<result name="toGroupTaskList" type="redirectAction">
+				<param name="namespace">/task</param>
+				<param name="actionName">taskAction_findGroupTask</param>		
+			</result>
+			<result name="personalTaskList">/WEB-INF/pages/workflow/personaltask.jsp</result>
+			<result name="checkUI">/WEB-INF/pages/workflow/check.jsp</result>
+			<result name="toPersonalTaskList" type="redirectAction">
+				<param name="namespace">/task</param>
+				<param name="actionName">taskAction_findPersonalTask</param>
+			</result>
 		</action>
 	</package>
 	
